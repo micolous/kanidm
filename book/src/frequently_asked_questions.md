@@ -59,6 +59,35 @@ is a comprehensive and valuable resource discussing the security of OAuth2 and i
 Connect as well. In general Kanidm follows and implements many of the recommendations in this
 document, as well as choosing not to implement certain known insecure OAuth2 features.
 
+### Which OAuth2 features will Kanidm not implement?
+
+This is not a complete list.
+
+* [ID Token][id-token] (`response_type=id_token`)[^rt]: vulnerable to
+  [the same security issues as Implicit Grant][implicit-grant-sec].
+  Browser-based OAuth2 applications should
+  [use the Authorisation Code flow with PKCE][bba] to obtain an `id_token`.
+
+* [Implicit Grant][implicit-grant] (`response_type=token`)[^rt]: vulnerable to
+  [many security issues][implicit-grant-sec]. Browser-based OAuth2 applications
+  should [use the Authorisation Code flow with PKCE][bba] to obtain an
+  `access_token`.
+
+* Setting a client secret to a *specific* value.
+
+  This enables secret re-use, and is typically misused by public clients using
+  a confidential client flow.
+
+[^rt]: `response_type` exclusions *also* apply to any
+[multi-response combination][multi-response] which includes one or more excluded
+response types (eg: `response_type=code%20token`)
+
+[bba]: https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps#section-4
+[id-token]: https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html#id_token
+[implicit-grant]: https://datatracker.ietf.org/doc/html/rfc6749#section-4.2
+[implicit-grant-sec]: https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics#section-2.1.2
+[multi-response]: https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html#Combinations
+
 ### Why is disabling PKCE considered insecure?
 
 [RFC7636 - Proof Key for Code Exchange by OAuth Public Clients](https://www.rfc-editor.org/rfc/rfc7636)

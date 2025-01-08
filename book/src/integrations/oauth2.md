@@ -20,14 +20,18 @@ resource server as a service.
 It's important for you to know _how_ your service will interact with OAuth2. For example, does it
 rely on OpenID connect for identity information, or does it support RFC7662 token introspection?
 
-In general, Kanidm **requires** that your service supports three things:
+In general, Kanidm **requires** that your service supports:
 
-* HTTP basic authentication to the authorisation server (Kanidm)
+* The [Authorisation Code][auth-code] grant type (`response_type=code`).
+  [Kanidm does not support Implicit Grant](../frequently_asked_questions.md#which-oauth2-features-will-kanidm-not-implement).
 
-* PKCE `S256` code verification (`code_challenge_methods_supported`)
+* For confidential clients, HTTP basic or HTTP POST authentication to the
+  authorisation server (`token_endpoint_auth_methods_supported`).
+
+* PKCE `S256` code verification (`code_challenge_methods_supported`).
 
 * If it uses OIDC, `ES256` for token signatures
-  (`id_token_signing_alg_values_supported`)
+  (`id_token_signing_alg_values_supported`).
 
 If your service doesn't support PKCE or only supports `RS256` token signatures,
 see [extended options for legacy clients](#extended-options-for-legacy-clients).
@@ -35,6 +39,8 @@ see [extended options for legacy clients](#extended-options-for-legacy-clients).
 Kanidm issues tokens which are
 [RFC 9068 JWTs](https://datatracker.ietf.org/doc/html/rfc9068), allowing service
 introspection.
+
+[auth-code]: https://datatracker.ietf.org/doc/html/rfc6749#section-4.1
 
 > [!NOTE]
 >
