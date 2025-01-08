@@ -59,6 +59,20 @@ is a comprehensive and valuable resource discussing the security of OAuth2 and i
 Connect as well. In general Kanidm follows and implements many of the recommendations in this
 document, as well as choosing not to implement certain known insecure OAuth2 features.
 
+### Which OAuth2 features does Kanidm support?
+
+There are two machine-readable documents which describe which OAuth2 and OpenID
+features your Kanidm instance (or client configuration) supports:
+
+* [OpenID Connect Discovery 1.0](https://openid.net/specs/openid-connect-discovery-1_0.html):
+  `https://idm.example.com/oauth2/openid/:client_id:/.well-known/openid-configuration`
+
+* [RFC 8414 OAuth 2.0 Authorisation Server Metadata](https://datatracker.ietf.org/doc/html/rfc8414):
+  `https://idm.example.com/oauth2/openid/:client_id:/.well-known/oauth-authorization-server`
+
+More information is available in
+[Kanidm's OAuth 2.0 URL list](./integrations/oauth2.md#kanidms-oauth2-urls).
+
 ### Which OAuth2 features will Kanidm not implement?
 
 This is not a complete list.
